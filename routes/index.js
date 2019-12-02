@@ -1,9 +1,9 @@
-const router = require("express").Router()
-const Image = require("../models/image")
-const cloudinary = require("cloudinary")
-const fs = require("fs-extra")
+const router = require("express").Router() // Router
+const Image = require("../models/image") // Image model
+const cloudinary = require("cloudinary") // Cloudinary
+const fs = require("fs-extra") 
 
-cloudinary.config({
+cloudinary.config({ // Cloudinary configuration with enviroment variables
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
@@ -16,12 +16,12 @@ router.get("/" , (req , res) => {
 
 
 //IMAGES ROUTE
-router.get("/images" , async (req , res) => {
+router.get("/images" , async (req , res) => { // See all images
     const images = await Image.find()
     res.render("images" , {images})
 })
 
-router.get("/images/:_id" , async (req , res) => {
+router.get("/images/:_id" , async (req , res) => { // See one image
     const _id = req.params
     const image = await Image.findById(_id)
     if (!image) {
@@ -32,7 +32,7 @@ router.get("/images/:_id" , async (req , res) => {
     }
 })
 
-router.get("/images/delete/:_id" , async (req , res) => {
+router.get("/images/delete/:_id" , async (req , res) => { // Delete an image
     const _id = req.params
     const image = await Image.findByIdAndDelete(_id)
     const result = await cloudinary.v2.uploader.destroy(image.public_id)
@@ -52,15 +52,15 @@ router.get("/addimage" , (req , res) => {
     res.render("addimage")
 })
 
-router.post("/addimage" , async (req , res) => {
-    const {title , description} = req.body
+router.post("/addimage" , async (req , res) => { // Add an image
+    const {title , description} = req.body // Taking values
 
-    if (!title) {
+    if (!title) { // if there´s no title
         req.flash("error_msg" , "A title is needed")
         res.redirect("/addimage")
     } else {
         const file = req.file
-        if (!file) {
+        if (!file) { // if there´s no image/file
             req.flash("error_msg" , "A file is needed")
             res.redirect("/addimage")
         } else {
@@ -74,7 +74,7 @@ router.post("/addimage" , async (req , res) => {
             })
         
             await newImage.save()
-            await fs.unlink(req.file.path)
+            await fs.unlink(req.file.path) // Quit the image of the public/images folder
             .then(done => {
                 req.flash("success_msg" , "Done !")
                 res.redirect("/images")   

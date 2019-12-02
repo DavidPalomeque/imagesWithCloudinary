@@ -1,3 +1,5 @@
+//IMAGE DATA MODEL STRUCTURE
+
 const mongoose = require("mongoose")
 const {Schema} = require("mongoose")
 
