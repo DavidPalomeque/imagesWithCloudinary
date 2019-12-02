@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 mx-auto mt-5">
+        <div class="card">
+            <div class="card-header" style="text-align: center;">
+                <h4>ADD IMAGE</h4>
+            </div>
+            <div class="card-body">
+                <form action="/addimage" method="post" enctype="multipart/form-data">
+                    <div class="input-group">
+                        <input class="form-control m-3" type="text" name="title" placeholder="TITLE">
+                    </div>                     
+                    <div class="input-group">
+                        <input class="form-control m-3" type="text" name="description" placeholder="DESCRIPTION">
+                    </div>
+                    <div class="input-group">
+                        <input type="file" class="custom-file-input" name="file" id="file1">
+                        <label class="custom-file-label mt-3" for="file1" id="file-label" style="color: teal;">CHOOSE IMAGE</label>
+                    </div>
+                    <button class="btn btn-white bg-primary btn-block mt-4" type="submit">GO !</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
